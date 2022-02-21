@@ -1,3 +1,5 @@
+import 'package:chat_app/screens/HomeScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -166,7 +168,11 @@ class _RegState extends State<Reg> {
                         backgroundColor: Colors.blue,
                       ),
                       onPressed: () {
-                        signup(emailController.text, passwordController.text);
+                        signup(usernameController.text, emailController.text,
+                            passwordController.text);
+                        signin(emailController.text, passwordController.text);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Home()));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
@@ -212,33 +218,36 @@ class _RegState extends State<Reg> {
     );
   }
 
-  void signup(String email, String password) async {
+  void signup(String name, String email, String password) async {
     if (_formkey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });
+
+      FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
+        "name": name,
+        "email": email,
+        "status": "unavailable",
+      });
     }
   }
 
-  // postdetails() async {
-  //   FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
-  //   User? user = _auth.currentUser;
-
-  //   UserModel usermodel = UserModel();
-
-  //   usermodel.email = user!.email;
-  //   usermodel.uid = user.uid;
-  //   usermodel.username = usernameController.text;
-
-  //   await firebasefirestore
-  //       .collection('blogs')
-  //       .doc(user.uid)
-  //       .set(usermodel.toMap());
-  //   Fluttertoast.showToast(msg: "Account created successfully");
-
-  //   Navigator.pushAndRemoveUntil((context),
-  //       MaterialPageRoute(builder: (context) => Home()), (route) => false);
-  // }
+  void signin(String email, String password) async {
+    if (_formkey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Account Created Successfully!"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Home()))
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
 }
