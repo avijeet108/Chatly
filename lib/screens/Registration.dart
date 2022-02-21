@@ -1,13 +1,7 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:blog_stack/services/user_model.dart';
-// import 'package:blog_stack/views/home.dart';
-import 'package:chat_app/HomeScreen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:chat_app/LoginScreen.dart';
-//import 'package:blog_stack/screens/login.dart';
+import 'package:chat_app/screens/LoginScreen.dart';
 
 class Reg extends StatefulWidget {
   @override
