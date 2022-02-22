@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:chat_app/screens/LoginScreen.dart';
 import 'package:chat_app/constants/Colours.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Reg extends StatefulWidget {
   @override
@@ -41,6 +42,17 @@ class _RegState extends State<Reg> {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
+                  Text(
+                    "Signup",
+                    style: GoogleFonts.akayaTelivigala(
+                        textStyle: TextStyle(
+                            color: pink,
+                            fontSize: 60,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  SizedBox(
+                    height: 60.0,
+                  ),
                   Form(
                     key: _formkey,
                     child: Column(
@@ -67,14 +79,28 @@ class _RegState extends State<Reg> {
                           cursorHeight: 22.0,
                           autofocus: false,
                           decoration: InputDecoration(
+                              fillColor: pink,
+                              filled: true,
                               prefixIcon: Icon(
                                 Icons.person,
-                                color: Colors.white,
+                                color: purple,
                               ),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
                               labelText: 'Name',
-                              labelStyle: TextStyle(color: Colors.white)),
+                              labelStyle: GoogleFonts.akayaTelivigala(
+                                  textStyle: TextStyle(
+                                      color: Colors.white, fontSize: 22))),
                         ),
                         SizedBox(
                           height: 15.0,
@@ -103,14 +129,28 @@ class _RegState extends State<Reg> {
                           cursorHeight: 22.0,
                           autofocus: false,
                           decoration: InputDecoration(
+                              fillColor: pink,
+                              filled: true,
                               prefixIcon: Icon(
                                 Icons.email,
-                                color: Colors.white,
+                                color: purple,
                               ),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
                               labelText: 'Email',
-                              labelStyle: TextStyle(color: Colors.white)),
+                              labelStyle: GoogleFonts.akayaTelivigala(
+                                  textStyle: TextStyle(
+                                      color: Colors.white, fontSize: 22))),
                         ),
                         SizedBox(
                           height: 15.0,
@@ -135,11 +175,23 @@ class _RegState extends State<Reg> {
                           autofocus: false,
                           obscureText: _passshow,
                           decoration: InputDecoration(
+                            fillColor: pink,
+                            filled: true,
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0)),
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(30.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(30.0)),
                             prefixIcon: Icon(
                               Icons.lock,
-                              color: Colors.white,
+                              color: purple,
                             ),
                             suffixIcon: IconButton(
                               onPressed: showhide,
@@ -147,18 +199,20 @@ class _RegState extends State<Reg> {
                                 _secure
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                color: Colors.white,
+                                color: purple,
                               ),
                             ),
                             labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.white),
+                            labelStyle: GoogleFonts.akayaTelivigala(
+                                textStyle: TextStyle(
+                                    color: Colors.white, fontSize: 22)),
                           ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 25.0,
+                    height: 35.0,
                   ),
                   SizedBox(
                     //width: double.infinity,
@@ -184,14 +238,18 @@ class _RegState extends State<Reg> {
                     ),
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 25.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Already have an account?",
-                        style: TextStyle(color: Colors.white),
+                        style: GoogleFonts.akayaTelivigala(
+                            textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        )),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -200,8 +258,11 @@ class _RegState extends State<Reg> {
                         },
                         child: Text(
                           ' Log In',
-                          style: TextStyle(
-                              color: pink, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.akayaTelivigala(
+                              textStyle: TextStyle(
+                            color: pink,
+                            fontSize: 20,
+                          )),
                         ),
                       )
                     ],

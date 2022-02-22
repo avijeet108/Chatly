@@ -48,8 +48,16 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.all(30.0),
                     child: Column(
                       children: [
+                        Text(
+                          "Login",
+                          style: GoogleFonts.akayaTelivigala(
+                              textStyle: TextStyle(
+                                  color: pink,
+                                  fontSize: 60,
+                                  fontWeight: FontWeight.bold)),
+                        ),
                         SizedBox(
-                          height: 50.0,
+                          height: 60,
                         ),
                         Form(
                           key: _formkey,
@@ -83,7 +91,7 @@ class _LoginState extends State<Login> {
                                   filled: true,
                                   prefixIcon: Icon(
                                     Icons.email,
-                                    color: Colors.white,
+                                    color: purple,
                                   ),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -146,7 +154,7 @@ class _LoginState extends State<Login> {
                                           BorderRadius.circular(30.0)),
                                   prefixIcon: Icon(
                                     Icons.lock,
-                                    color: Colors.white,
+                                    color: purple,
                                   ),
                                   suffixIcon: IconButton(
                                     onPressed: showhide,
@@ -154,7 +162,7 @@ class _LoginState extends State<Login> {
                                       _secure
                                           ? Icons.visibility
                                           : Icons.visibility_off,
-                                      color: Colors.white,
+                                      color: purple,
                                     ),
                                   ),
                                   labelText: 'Password',

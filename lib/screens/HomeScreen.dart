@@ -1,7 +1,10 @@
+import 'package:chat_app/constants/Colours.dart';
+import 'package:chat_app/screens/ChatRoom.dart';
 import 'package:chat_app/screens/LoginScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,6 +17,14 @@ class _HomeState extends State<Home> {
   final TextEditingController _search = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String chatRoomId(String user1, String user2) {
+    if (user1.compareTo(user2) > 0) {
+      return "*$user2*";
+    } else {
+      return "*$user1*";
+    }
+  }
 
   void onSearch() async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -31,7 +42,7 @@ class _HomeState extends State<Home> {
         userMap = value.docs[0].data();
         isLoading = false;
       });
-      print(userMap);
+      //print(userMap);
     });
   }
 
@@ -39,12 +50,23 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+        backgroundColor: purple,
         appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: Text("Home Screen"),
+          automaticallyImplyLeading: false,
+          backgroundColor: pink,
+          title: Text(
+            "Home Screen",
+            style: GoogleFonts.akayaTelivigala(
+                textStyle: TextStyle(
+                    color: purple, fontSize: 25, fontWeight: FontWeight.bold)),
+          ),
           actions: [
             IconButton(
-                icon: Icon(Icons.logout), onPressed: () => logOut(context))
+                icon: Icon(
+                  Icons.logout,
+                  color: purple,
+                ),
+                onPressed: () => logOut(context))
           ],
         ),
         body: isLoading == true
@@ -69,9 +91,20 @@ class _HomeState extends State<Home> {
                     child: TextField(
                       controller: _search,
                       decoration: InputDecoration(
+                        fillColor: pink,
+                        filled: true,
                         hintText: "Search",
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 2.0,
+                          ),
                         ),
                       ),
                     ),
@@ -90,30 +123,33 @@ class _HomeState extends State<Home> {
                 userMap != null
                     ? ListTile(
                         onTap: () {
-                          // String roomId = chatRoomId(
-                          //     _auth.currentUser!.displayName!,
-                          //     userMap!['name']);
+                          String roomId = chatRoomId(
+                              _auth.currentUser!.displayName!,
+                              userMap!['name']);
 
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (_) => ChatRoom(
-                          //       chatRoomId: roomId,
-                          //       userMap: userMap!,
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => ChatRoom(
+                                chatRoomId: roomId,
+                                userMap: userMap!,
+                              ),
+                            ),
+                          );
                         },
-                        leading: Icon(Icons.account_box, color: Colors.white),
+                        leading: Icon(Icons.account_box, color: pink),
                         title: Text(
                           userMap!['name'],
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: pink,
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        subtitle: Text(userMap!['email']),
-                        trailing: Icon(Icons.chat, color: Colors.white),
+                        subtitle: Text(
+                          userMap!['email'],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        trailing: Icon(Icons.chat, color: pink),
                       )
                     : Container(),
               ]));
