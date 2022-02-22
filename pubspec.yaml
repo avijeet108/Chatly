@@ -38,6 +38,7 @@ dependencies:
   firebase_core:
   fluttertoast:
   cloud_firestore:
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

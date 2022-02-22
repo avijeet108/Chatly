@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:chat_app/screens/LoginScreen.dart';
+import 'package:chat_app/constants/Colours.dart';
 
 class Reg extends StatefulWidget {
   @override
@@ -32,6 +33,7 @@ class _RegState extends State<Reg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: purple,
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -67,7 +69,7 @@ class _RegState extends State<Reg> {
                           decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.person,
-                                color: Colors.blue,
+                                color: Colors.white,
                               ),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.0)),
@@ -103,7 +105,7 @@ class _RegState extends State<Reg> {
                           decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.email,
-                                color: Colors.blue,
+                                color: Colors.white,
                               ),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15.0)),
@@ -136,8 +138,8 @@ class _RegState extends State<Reg> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0)),
                             prefixIcon: Icon(
-                              Icons.vpn_key,
-                              color: Colors.blue,
+                              Icons.lock,
+                              color: Colors.white,
                             ),
                             suffixIcon: IconButton(
                               onPressed: showhide,
@@ -145,7 +147,7 @@ class _RegState extends State<Reg> {
                                 _secure
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                color: Colors.blue,
+                                color: Colors.white,
                               ),
                             ),
                             labelText: 'Password',
@@ -159,30 +161,25 @@ class _RegState extends State<Reg> {
                     height: 25.0,
                   ),
                   SizedBox(
-                    width: double.infinity,
+                    //width: double.infinity,
                     child: TextButton(
                       style: TextButton.styleFrom(
                         elevation: 15.0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
-                        backgroundColor: Colors.blue,
+                            borderRadius: BorderRadius.circular(30.0)),
+                        backgroundColor: pink,
                       ),
                       onPressed: () {
                         signup(usernameController.text, emailController.text,
                             passwordController.text);
                         signin(emailController.text, passwordController.text);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Home()));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) => Home()));
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Text(
-                          'Sign up',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold),
-                        ),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 40,
+                        color: purple,
                       ),
                     ),
                   ),
@@ -204,7 +201,7 @@ class _RegState extends State<Reg> {
                         child: Text(
                           ' Log In',
                           style: TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
+                              color: pink, fontWeight: FontWeight.bold),
                         ),
                       )
                     ],

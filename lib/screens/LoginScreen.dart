@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:chat_app/screens/RegistrationScreen.dart';
+import 'package:chat_app/constants/Colours.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -36,6 +38,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: purple,
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : Center(
@@ -76,18 +79,34 @@ class _LoginState extends State<Login> {
                                 cursorHeight: 22.0,
                                 autofocus: false,
                                 decoration: InputDecoration(
-                                    prefixIcon: Icon(
-                                      Icons.email,
-                                      color: Colors.blue,
-                                    ),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    labelText: 'Email',
-                                    labelStyle: TextStyle(color: Colors.white)),
+                                  fillColor: pink,
+                                  filled: true,
+                                  prefixIcon: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  labelText: 'Email',
+                                  labelStyle: GoogleFonts.akayaTelivigala(
+                                      textStyle: TextStyle(
+                                          color: Colors.white, fontSize: 22)),
+                                ),
                               ),
                               SizedBox(
-                                height: 15.0,
+                                height: 25.0,
                               ),
                               TextFormField(
                                 controller: passwordController,
@@ -109,12 +128,25 @@ class _LoginState extends State<Login> {
                                   passwordController.text = value!;
                                 },
                                 decoration: InputDecoration(
+                                  fillColor: pink,
+                                  filled: true,
                                   border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                      ),
                                       borderRadius:
-                                          BorderRadius.circular(15.0)),
+                                          BorderRadius.circular(30.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
                                   prefixIcon: Icon(
-                                    Icons.vpn_key,
-                                    color: Colors.blue,
+                                    Icons.lock,
+                                    color: Colors.white,
                                   ),
                                   suffixIcon: IconButton(
                                     onPressed: showhide,
@@ -122,27 +154,35 @@ class _LoginState extends State<Login> {
                                       _secure
                                           ? Icons.visibility
                                           : Icons.visibility_off,
-                                      color: Colors.blue,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   labelText: 'Password',
-                                  labelStyle: TextStyle(color: Colors.white),
+                                  //   style: GoogleFonts.akayaTelivigala(
+                                  //   textStyle: TextStyle(
+                                  //       color: purple,
+                                  //       fontSize: 25.0,
+                                  //       fontWeight: FontWeight.bold),
+                                  // ),
+                                  labelStyle: GoogleFonts.akayaTelivigala(
+                                      textStyle: TextStyle(
+                                          color: Colors.white, fontSize: 22)),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: 25.0,
+                          height: 35.0,
                         ),
                         SizedBox(
-                          width: double.infinity,
+                          //width: double.infinity,
                           child: TextButton(
                             style: TextButton.styleFrom(
                               elevation: 15.0,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              backgroundColor: Colors.blue,
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              backgroundColor: pink,
                             ),
                             onPressed: () {
                               setState(() {
@@ -154,27 +194,26 @@ class _LoginState extends State<Login> {
                                 isLoading = false;
                               });
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Text(
-                                'Log In',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 40,
+                              color: purple,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 15.0,
+                          height: 25.0,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "Don't have an account?",
-                              style: TextStyle(color: Colors.white),
+                              style: GoogleFonts.akayaTelivigala(
+                                  textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              )),
                             ),
                             GestureDetector(
                               onTap: () {
@@ -185,9 +224,11 @@ class _LoginState extends State<Login> {
                               },
                               child: Text(
                                 ' Sign up',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                style: GoogleFonts.akayaTelivigala(
+                                    textStyle: TextStyle(
+                                        color: pink,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
                               ),
                             )
                           ],
