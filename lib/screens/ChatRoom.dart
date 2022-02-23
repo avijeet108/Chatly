@@ -1,9 +1,12 @@
-import 'dart:math';
-
+import 'dart:io';
+import 'dart:ui';
 import 'package:chat_app/constants/Colours.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatRoom extends StatelessWidget {
   final Map<String, dynamic> userMap;
@@ -15,11 +18,76 @@ class ChatRoom extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  File? imageFile;
+
+  Future getImage() async {
+    ImagePicker _picker = ImagePicker();
+
+    await _picker.pickImage(source: ImageSource.gallery).then((xFile) {
+      if (xFile != null) {
+        imageFile = File(xFile.path);
+        uploadImage();
+      }
+    });
+  }
+
+  Future uploadImage() async {
+    String fileName = Uuid().v1();
+    int status = 1;
+
+    print("1111111111111111111111");
+
+    await _firestore
+        .collection('chatroom')
+        .doc(chatRoomId)
+        .collection('chats')
+        .doc(fileName)
+        .set({
+      "sendby": _auth.currentUser!.displayName,
+      "message": "",
+      "type": "img",
+      "time": FieldValue.serverTimestamp(),
+    });
+
+    print("22222222222222222222222222222");
+
+    var ref =
+        FirebaseStorage.instance.ref().child('Images').child("$fileName.jpg");
+
+    var uploadTask = await ref.putFile(imageFile!).catchError((error) async {
+      await _firestore
+          .collection('chatroom')
+          .doc(chatRoomId)
+          .collection('chats')
+          .doc(fileName)
+          .delete();
+
+      status = 0;
+    });
+
+    if (status == 1) {
+      print("33333333333333333333333333");
+
+      String imageUrl = await uploadTask.ref.getDownloadURL();
+
+      await _firestore
+          .collection('chatroom')
+          .doc(chatRoomId)
+          .collection('chats')
+          .doc(fileName)
+          .update({"message": imageUrl});
+
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      print(imageUrl);
+    }
+  }
+
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> messages = {
         "sendby": _auth.currentUser!.displayName,
         "message": _message.text,
+        "type": "text",
         "time": FieldValue.serverTimestamp(),
       };
       await _firestore
@@ -42,7 +110,7 @@ class ChatRoom extends StatelessWidget {
       //backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: pink,
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         title: StreamBuilder<DocumentSnapshot>(
           stream:
               _firestore.collection("users").doc(userMap['uid']).snapshots(),
@@ -87,10 +155,6 @@ class ChatRoom extends StatelessWidget {
                         Map<String, dynamic> map = snapshot.data!.docs[index]
                             .data() as Map<String, dynamic>;
                         return messages(size, map, context);
-                        // return Text(
-                        //   snapshot.data!.docs[index]['message'],
-                        //   style: TextStyle(color: pink),
-                        // );
                       },
                     );
                   } else {
@@ -116,7 +180,7 @@ class ChatRoom extends StatelessWidget {
                         controller: _message,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
-                              onPressed: () {},
+                              onPressed: getImage,
                               icon: Icon(Icons.photo),
                             ),
                             hintText: "Send Message",
@@ -126,7 +190,7 @@ class ChatRoom extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.send,
                           color: pink,
                         ),
@@ -143,26 +207,76 @@ class ChatRoom extends StatelessWidget {
   }
 
   Widget messages(Size size, Map<String, dynamic> map, BuildContext context) {
-    return Container(
-      width: size.width,
-      alignment: map['sendby'] == _auth.currentUser!.displayName
-          ? Alignment.centerRight
-          : Alignment.centerLeft,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.blue,
-        ),
-        child: Text(
-          map['message'],
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-        ),
+    return map['type'] == "text"
+        ? Container(
+            width: size.width,
+            alignment: map['sendby'] == _auth.currentUser!.displayName
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.blue,
+              ),
+              child: Text(
+                map['message'],
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        : Container(
+            height: size.height / 2.5,
+            width: size.width,
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            alignment: map['sendby'] == _auth.currentUser!.displayName
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: InkWell(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ShowImage(
+                    imageUrl: map['message'],
+                  ),
+                ),
+              ),
+              child: Container(
+                height: size.height / 2.5,
+                width: size.width / 2,
+                decoration: BoxDecoration(border: Border.all()),
+                alignment: map['message'] != "" ? null : Alignment.center,
+                child: map['message'] != ""
+                    ? Image.network(
+                        map['message'],
+                        fit: BoxFit.cover,
+                      )
+                    : CircularProgressIndicator(),
+              ),
+            ),
+          );
+  }
+}
+
+class ShowImage extends StatelessWidget {
+  final String imageUrl;
+
+  const ShowImage({required this.imageUrl, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
+    return Scaffold(
+      body: Container(
+        height: size.height,
+        width: size.width,
+        color: Colors.black,
+        child: Image.network(imageUrl),
       ),
     );
   }
