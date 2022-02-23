@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -107,8 +108,9 @@ class ChatRoom extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      //backgroundColor: Colors.white,
+      backgroundColor: Colors.lime,
       appBar: AppBar(
+        leadingWidth: 35,
         backgroundColor: pink,
         //automaticallyImplyLeading: false,
         title: StreamBuilder<DocumentSnapshot>(
@@ -118,11 +120,20 @@ class ChatRoom extends StatelessWidget {
             if (snapshot.data != null) {
               return Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(userMap['name']),
-                    Text(
-                      snapshot.data!['status'],
-                      style: TextStyle(fontSize: 14),
+                    Row(
+                      children: [
+                        Text(
+                          snapshot.data!['status'],
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: snapshot.data!['status'] == "Online"
+                                  ? Color.fromARGB(255, 123, 240, 127)
+                                  : Colors.red),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -137,6 +148,7 @@ class ChatRoom extends StatelessWidget {
         child: Column(
           children: [
             Container(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 8),
               height: size.height / 1.25,
               width: size.width,
               child: StreamBuilder<QuerySnapshot>(
@@ -177,16 +189,36 @@ class ChatRoom extends StatelessWidget {
                       height: size.height / 17,
                       width: size.width / 1.3,
                       child: TextField(
+                        cursorColor: purple,
+                        cursorHeight: 20.0,
                         controller: _message,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: getImage,
-                              icon: Icon(Icons.photo),
+                          fillColor: Colors.white,
+                          filled: true,
+                          suffixIcon: IconButton(
+                            onPressed: getImage,
+                            icon: Icon(
+                              Icons.photo,
+                              color: pink,
                             ),
-                            hintText: "Send Message",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
+                          ),
+                          hintText: "Send Message...",
+                          hintStyle: GoogleFonts.roboto(
+                              textStyle:
+                                  TextStyle(color: purple, fontSize: 15)),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(30.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(30.0)),
+                        ),
                       ),
                     ),
                     IconButton(
@@ -217,8 +249,18 @@ class ChatRoom extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
+                borderRadius: map['sendby'] == _auth.currentUser!.displayName
+                    ? BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        bottomLeft: Radius.circular(30.0),
+                        bottomRight: Radius.circular(30.0))
+                    : BorderRadius.only(
+                        topRight: Radius.circular(30.0),
+                        bottomLeft: Radius.circular(30.0),
+                        bottomRight: Radius.circular(30.0)),
+                color: map['sendby'] == _auth.currentUser!.displayName
+                    ? purple
+                    : pink,
               ),
               child: Text(
                 map['message'],
@@ -248,14 +290,28 @@ class ChatRoom extends StatelessWidget {
               child: Container(
                 height: size.height / 2.5,
                 width: size.width / 2,
-                decoration: BoxDecoration(border: Border.all()),
+                //decoration: BoxDecoration(border: Border.all()),
                 alignment: map['message'] != "" ? null : Alignment.center,
                 child: map['message'] != ""
-                    ? Image.network(
-                        map['message'],
-                        fit: BoxFit.cover,
+                    ? ClipRRect(
+                        borderRadius:
+                            map['sendby'] == _auth.currentUser!.displayName
+                                ? BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    bottomLeft: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0))
+                                : BorderRadius.only(
+                                    topRight: Radius.circular(30.0),
+                                    bottomLeft: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0)),
+                        child: Image.network(
+                          map['message'],
+                          fit: BoxFit.cover,
+                        ),
                       )
-                    : CircularProgressIndicator(),
+                    : CircularProgressIndicator(
+                        color: purple,
+                      ),
               ),
             ),
           );

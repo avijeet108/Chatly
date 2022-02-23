@@ -40,7 +40,10 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: purple,
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+              color: purple,
+            ))
           : Center(
               child: SingleChildScrollView(
                 child: Container(

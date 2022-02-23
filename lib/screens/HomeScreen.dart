@@ -74,21 +74,23 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: purple,
+        backgroundColor: Colors.lime,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: pink,
           title: Text(
-            "Home Screen",
+            "Search User",
             style: GoogleFonts.akayaTelivigala(
                 textStyle: TextStyle(
-                    color: purple, fontSize: 25, fontWeight: FontWeight.bold)),
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold)),
           ),
           actions: [
             IconButton(
                 icon: Icon(
                   Icons.logout,
-                  color: purple,
+                  color: Colors.white,
                 ),
                 onPressed: () => logOut(context))
           ],
@@ -98,7 +100,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                 child: Container(
                   height: size.height / 20,
                   width: size.height / 20,
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(color: purple),
                 ),
               )
             : Column(children: [
@@ -112,34 +114,43 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   child: Container(
                     height: size.height / 14,
                     width: size.width / 1.15,
-                    child: TextField(
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.white),
+                      cursorColor: Colors.white,
+                      cursorHeight: 22.0,
+                      autofocus: false,
                       controller: _search,
                       decoration: InputDecoration(
-                        fillColor: pink,
-                        filled: true,
-                        hintText: "Search",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
+                          fillColor: pink,
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(30.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(30.0)),
+                          suffixIcon: IconButton(
+                            onPressed: onSearch,
+                            icon: Icon(
+                              Icons.search,
                               color: Colors.white,
-                              width: 2.0,
                             ),
-                            borderRadius: BorderRadius.circular(30.0)),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 2.0,
                           ),
-                        ),
-                      ),
+                          //labelText: 'Search',
+                          labelStyle: GoogleFonts.akayaTelivigala(
+                              textStyle: TextStyle(
+                                  color: Colors.white, fontSize: 22))),
                     ),
                   ),
                 ),
                 SizedBox(
                   height: size.height / 50,
-                ),
-                ElevatedButton(
-                  onPressed: onSearch,
-                  child: Text("Search"),
                 ),
                 SizedBox(
                   height: size.height / 30,
@@ -164,14 +175,14 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                         title: Text(
                           userMap!['name'],
                           style: TextStyle(
-                            color: pink,
+                            color: purple,
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         subtitle: Text(
                           userMap!['email'],
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: pink),
                         ),
                         trailing: Icon(Icons.chat, color: pink),
                       )
