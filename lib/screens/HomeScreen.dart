@@ -11,15 +11,39 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with WidgetsBindingObserver {
   bool isLoading = false;
   Map<String, dynamic>? userMap;
   final TextEditingController _search = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+    setStatus("Online");
+  }
+
+  void setStatus(String status) async {
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+      "status": status,
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // online
+      setStatus("Online");
+    } else {
+      // offline
+      setStatus("Offline");
+    }
+  }
+
   String chatRoomId(String user1, String user2) {
-    if (user1.compareTo(user2) > 0) {
+    if (user1.compareTo(user2) < 0) {
       return "*$user2*";
     } else {
       return "*$user1*";
@@ -127,14 +151,14 @@ class _HomeState extends State<Home> {
                               _auth.currentUser!.displayName!,
                               userMap!['name']);
 
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => ChatRoom(
-                                chatRoomId: roomId,
-                                userMap: userMap!,
-                              ),
-                            ),
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatRoom(
+                                  chatRoomId: roomId,
+                                  userMap: userMap!,
+                                ),
+                              ));
                         },
                         leading: Icon(Icons.account_box, color: pink),
                         title: Text(

@@ -278,11 +278,13 @@ class _RegState extends State<Reg> {
 
   void signup(String name, String email, String password) async {
     if (_formkey.currentState!.validate()) {
-      await _auth
+      UserCredential userCrendetial = await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });
+
+      userCrendetial.user!.updateDisplayName(name);
 
       FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
