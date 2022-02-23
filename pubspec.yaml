@@ -39,6 +39,9 @@ dependencies:
   fluttertoast:
   cloud_firestore:
   google_fonts:
+  image_picker:
+  firebase_storage:
+  uuid:
 
 dev_dependencies:
   flutter_test:

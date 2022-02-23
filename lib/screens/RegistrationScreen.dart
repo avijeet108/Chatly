@@ -292,6 +292,7 @@ class _RegState extends State<Reg> {
         "name": name,
         "email": email,
         "status": "unavailable",
+        "uid": _auth.currentUser!.uid,
       });
     }
   }
