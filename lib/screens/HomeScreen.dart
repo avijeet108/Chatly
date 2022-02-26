@@ -1,4 +1,4 @@
-import 'package:chat_app/constants/Colours.dart';
+import 'package:chat_app/constants/colours.dart';
 import 'package:chat_app/screens/ChatRoom.dart';
 import 'package:chat_app/screens/LoginScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
