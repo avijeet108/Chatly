@@ -108,10 +108,11 @@ class ChatRoom extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.lime,
+      backgroundColor: background,
       appBar: AppBar(
+        elevation: 0,
         leadingWidth: 35,
-        backgroundColor: pink,
+        backgroundColor: background,
         //automaticallyImplyLeading: false,
         title: StreamBuilder<DocumentSnapshot>(
           stream:
@@ -122,7 +123,9 @@ class ChatRoom extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(userMap['name']),
+                    Text(
+                      userMap['name'],
+                    ),
                     Row(
                       children: [
                         Text(
@@ -189,42 +192,42 @@ class ChatRoom extends StatelessWidget {
                       height: size.height / 17,
                       width: size.width / 1.3,
                       child: TextField(
-                        cursorColor: purple,
+                        cursorColor: Colors.white,
                         cursorHeight: 20.0,
                         controller: _message,
                         decoration: InputDecoration(
-                          fillColor: Colors.white,
+                          fillColor: nav,
                           filled: true,
                           suffixIcon: IconButton(
                             onPressed: getImage,
                             icon: Icon(
                               Icons.photo,
-                              color: pink,
+                              color: blue,
                             ),
                           ),
                           hintText: "Send Message...",
                           hintStyle: GoogleFonts.roboto(
                               textStyle:
-                                  TextStyle(color: purple, fontSize: 15)),
+                                  TextStyle(color: Colors.white, fontSize: 15)),
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 2.0,
                               ),
-                              borderRadius: BorderRadius.circular(30.0)),
+                              borderRadius: BorderRadius.circular(10.0)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 2.0,
                               ),
-                              borderRadius: BorderRadius.circular(30.0)),
+                              borderRadius: BorderRadius.circular(10.0)),
                         ),
                       ),
                     ),
                     IconButton(
                         icon: const Icon(
                           Icons.send,
-                          color: pink,
+                          color: blue,
                         ),
                         onPressed: onSendMessage),
                   ],
@@ -259,8 +262,8 @@ class ChatRoom extends StatelessWidget {
                         bottomLeft: Radius.circular(30.0),
                         bottomRight: Radius.circular(30.0)),
                 color: map['sendby'] == _auth.currentUser!.displayName
-                    ? purple
-                    : pink,
+                    ? blue
+                    : grey,
               ),
               child: Text(
                 map['message'],
@@ -310,7 +313,7 @@ class ChatRoom extends StatelessWidget {
                         ),
                       )
                     : CircularProgressIndicator(
-                        color: purple,
+                        color: blue,
                       ),
               ),
             ),

@@ -34,7 +34,7 @@ class _RegState extends State<Reg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: purple,
+      backgroundColor: background,
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -43,15 +43,15 @@ class _RegState extends State<Reg> {
               child: Column(
                 children: [
                   Text(
-                    "Signup",
+                    "Chatly",
                     style: GoogleFonts.akayaTelivigala(
                         textStyle: TextStyle(
-                            color: pink,
+                            color: blue,
                             fontSize: 60,
                             fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(
-                    height: 60.0,
+                    height: 80.0,
                   ),
                   Form(
                     key: _formkey,
@@ -79,28 +79,27 @@ class _RegState extends State<Reg> {
                           cursorHeight: 22.0,
                           autofocus: false,
                           decoration: InputDecoration(
-                              fillColor: pink,
+                              fillColor: blue,
                               filled: true,
                               prefixIcon: Icon(
                                 Icons.person,
-                                color: purple,
+                                color: background,
                               ),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white,
                                     width: 2.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(30.0)),
+                                  borderRadius: BorderRadius.circular(20.0)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white,
                                     width: 2.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              labelText: 'Name',
-                              labelStyle: GoogleFonts.akayaTelivigala(
-                                  textStyle: TextStyle(
-                                      color: Colors.white, fontSize: 22))),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              labelText: 'Enter your name',
+                              labelStyle:
+                                  TextStyle(color: Colors.white, fontSize: 18)),
                         ),
                         SizedBox(
                           height: 15.0,
@@ -129,28 +128,27 @@ class _RegState extends State<Reg> {
                           cursorHeight: 22.0,
                           autofocus: false,
                           decoration: InputDecoration(
-                              fillColor: pink,
+                              fillColor: blue,
                               filled: true,
                               prefixIcon: Icon(
                                 Icons.email,
-                                color: purple,
+                                color: background,
                               ),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white,
                                     width: 2.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(30.0)),
+                                  borderRadius: BorderRadius.circular(20.0)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white,
                                     width: 2.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              labelText: 'Email',
-                              labelStyle: GoogleFonts.akayaTelivigala(
-                                  textStyle: TextStyle(
-                                      color: Colors.white, fontSize: 22))),
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              labelText: 'Enter your email',
+                              labelStyle:
+                                  TextStyle(color: Colors.white, fontSize: 18)),
                         ),
                         SizedBox(
                           height: 15.0,
@@ -175,20 +173,20 @@ class _RegState extends State<Reg> {
                           autofocus: false,
                           obscureText: _passshow,
                           decoration: InputDecoration(
-                            fillColor: pink,
+                            fillColor: blue,
                             filled: true,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.white,
                                   width: 2.0,
                                 ),
-                                borderRadius: BorderRadius.circular(30.0)),
+                                borderRadius: BorderRadius.circular(20.0)),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.white,
                                   width: 2.0,
                                 ),
-                                borderRadius: BorderRadius.circular(30.0)),
+                                borderRadius: BorderRadius.circular(20.0)),
                             prefixIcon: Icon(
                               Icons.lock,
                               color: purple,
@@ -202,10 +200,9 @@ class _RegState extends State<Reg> {
                                 color: purple,
                               ),
                             ),
-                            labelText: 'Password',
-                            labelStyle: GoogleFonts.akayaTelivigala(
-                                textStyle: TextStyle(
-                                    color: Colors.white, fontSize: 22)),
+                            labelText: 'Create Password',
+                            labelStyle:
+                                TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         ),
                       ],
@@ -220,8 +217,8 @@ class _RegState extends State<Reg> {
                       style: TextButton.styleFrom(
                         elevation: 15.0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        backgroundColor: pink,
+                            borderRadius: BorderRadius.circular(20.0)),
+                        backgroundColor: blue,
                       ),
                       onPressed: () {
                         signup(usernameController.text, emailController.text,
@@ -233,7 +230,7 @@ class _RegState extends State<Reg> {
                       child: Icon(
                         Icons.arrow_forward_ios,
                         size: 40,
-                        color: purple,
+                        color: background,
                       ),
                     ),
                   ),
@@ -245,11 +242,10 @@ class _RegState extends State<Reg> {
                     children: [
                       Text(
                         "Already have an account?",
-                        style: GoogleFonts.akayaTelivigala(
-                            textStyle: TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
-                        )),
+                          fontSize: 15,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -258,11 +254,11 @@ class _RegState extends State<Reg> {
                         },
                         child: Text(
                           ' Log In',
-                          style: GoogleFonts.akayaTelivigala(
-                              textStyle: TextStyle(
-                            color: pink,
-                            fontSize: 20,
-                          )),
+                          style: TextStyle(
+                            color: blue,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       )
                     ],

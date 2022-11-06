@@ -1,3 +1,4 @@
+import 'package:chat_app/constants/colours.dart';
 import 'package:chat_app/group_chatting/create_group/add_members.dart';
 import 'package:chat_app/group_chatting/group_chat_room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -46,34 +47,49 @@ class _GroupChatHomeScreenState extends State<GroupChatHomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Groups"),
+        elevation: 0,
+        backgroundColor: background,
+        title: Text("Your Groups"),
       ),
       body: isLoading
           ? Container(
+              color: background,
               height: size.height,
               width: size.width,
               alignment: Alignment.center,
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: blue,
+              ),
             )
-          : ListView.builder(
-              itemCount: groupList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => GroupChatRoom(
-                        groupName: groupList[index]['name'],
-                        groupChatId: groupList[index]['id'],
+          : Container(
+              color: background,
+              child: ListView.builder(
+                itemCount: groupList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => GroupChatRoom(
+                          groupName: groupList[index]['name'],
+                          groupChatId: groupList[index]['id'],
+                        ),
                       ),
                     ),
-                  ),
-                  leading: Icon(Icons.group),
-                  title: Text(groupList[index]['name']),
-                );
-              },
+                    leading: Icon(
+                      Icons.group,
+                      color: blue,
+                    ),
+                    title: Text(
+                      groupList[index]['name'],
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  );
+                },
+              ),
             ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.create),
+        backgroundColor: blue,
+        child: Icon(Icons.add),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => AddMembersInGroup(),

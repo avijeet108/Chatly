@@ -1,3 +1,4 @@
+import 'package:chat_app/constants/colours.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,10 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: background,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: background,
         title: Text("Add Members"),
       ),
       body: SingleChildScrollView(
@@ -78,20 +82,44 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
               height: size.height / 20,
             ),
             Container(
+              color: background,
               height: size.height / 14,
               width: size.width,
               alignment: Alignment.center,
               child: Container(
+                color: background,
                 height: size.height / 14,
                 width: size.width / 1.15,
                 child: TextField(
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Colors.white,
+                  cursorHeight: 22.0,
+                  autofocus: false,
                   controller: _search,
                   decoration: InputDecoration(
-                    hintText: "Search",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                      fillColor: nav,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      prefixIcon: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                      labelText: 'Search',
+                      labelStyle: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
               ),
             ),
@@ -100,22 +128,38 @@ class _AddMembersINGroupState extends State<AddMembersINGroup> {
             ),
             isLoading
                 ? Container(
+                    color: background,
                     height: size.height / 12,
                     width: size.height / 12,
                     alignment: Alignment.center,
                     child: CircularProgressIndicator(),
                   )
                 : ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(blue),
+                    ),
                     onPressed: onSearch,
                     child: Text("Search"),
                   ),
             userMap != null
                 ? ListTile(
                     onTap: onAddMembers,
-                    leading: Icon(Icons.account_box),
-                    title: Text(userMap!['name']),
-                    subtitle: Text(userMap!['email']),
-                    trailing: Icon(Icons.add),
+                    leading: Icon(
+                      Icons.account_box,
+                      color: blue,
+                    ),
+                    title: Text(
+                      userMap!['name'],
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    subtitle: Text(
+                      userMap!['email'],
+                      style: TextStyle(color: grey),
+                    ),
+                    trailing: Icon(
+                      Icons.add,
+                      color: Colors.green,
+                    ),
                   )
                 : SizedBox(),
           ],

@@ -1,3 +1,4 @@
+import 'package:chat_app/constants/colours.dart';
 import 'package:chat_app/screens/HomeScreen.dart';
 import 'package:chat_app/screens/HomeScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,46 +62,78 @@ class _CreateGroupState extends State<CreateGroup> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: background,
         title: Text("Group Name"),
       ),
       body: isLoading
           ? Container(
+              color: background,
               height: size.height,
               width: size.width,
               alignment: Alignment.center,
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: [
-                SizedBox(
-                  height: size.height / 10,
-                ),
-                Container(
-                  height: size.height / 14,
-                  width: size.width,
-                  alignment: Alignment.center,
-                  child: Container(
+          : Container(
+              color: background,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: size.height / 10,
+                  ),
+                  Container(
                     height: size.height / 14,
-                    width: size.width / 1.15,
-                    child: TextField(
-                      controller: _groupName,
-                      decoration: InputDecoration(
-                        hintText: "Enter Group Name",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                    width: size.width,
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: size.height / 14,
+                      width: size.width / 1.15,
+                      child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        cursorHeight: 22.0,
+                        autofocus: false,
+                        controller: _groupName,
+                        decoration: InputDecoration(
+                            fillColor: nav,
+                            filled: true,
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            prefixIcon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
+                            ),
+                            labelText: 'Enter Group Name',
+                            labelStyle:
+                                TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: size.height / 50,
-                ),
-                ElevatedButton(
-                  onPressed: createGroup,
-                  child: Text("Create Group"),
-                ),
-              ],
+                  SizedBox(
+                    height: size.height / 50,
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(blue),
+                    ),
+                    onPressed: createGroup,
+                    child: Text("Create Group"),
+                  ),
+                ],
+              ),
             ),
     );
   }
