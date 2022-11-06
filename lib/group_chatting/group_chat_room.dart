@@ -1,3 +1,4 @@
+import 'package:chat_app/constants/colours.dart';
 import 'package:chat_app/group_chatting/group_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +38,10 @@ class GroupChatRoom extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: background,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: background,
         title: Text(groupName),
         actions: [
           IconButton(
@@ -49,7 +53,9 @@ class GroupChatRoom extends StatelessWidget {
                       ),
                     ),
                   ),
-              icon: Icon(Icons.more_vert)),
+              icon: Icon(
+                Icons.more_vert,
+              )),
         ],
       ),
       body: SingleChildScrollView(
@@ -97,20 +103,46 @@ class GroupChatRoom extends StatelessWidget {
                       height: size.height / 17,
                       width: size.width / 1.3,
                       child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                        cursorHeight: 22.0,
+                        autofocus: false,
                         controller: _message,
                         decoration: InputDecoration(
+                            fillColor: nav,
+                            filled: true,
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0)),
                             suffixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.photo),
+                              icon: Icon(
+                                Icons.photo,
+                                color: blue,
+                              ),
                             ),
-                            hintText: "Send Message",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
+                            // labelText: 'Search',
+                            hintText: 'Send message...',
+                            hintStyle: TextStyle(color: Colors.white),
+                            labelStyle:
+                                TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     ),
                     IconButton(
-                        icon: Icon(Icons.send), onPressed: onSendMessage),
+                        icon: Icon(
+                          Icons.send,
+                          color: blue,
+                        ),
+                        onPressed: onSendMessage),
                   ],
                 ),
               ),
@@ -133,8 +165,10 @@ class GroupChatRoom extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
+                borderRadius: BorderRadius.circular(20),
+                color: chatMap['sendBy'] == _auth.currentUser!.displayName
+                    ? blue
+                    : grey,
               ),
               child: Column(
                 children: [

@@ -76,23 +76,21 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.lime,
+      backgroundColor: background,
       appBar: AppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: pink,
+        backgroundColor: background,
         title: Text(
-          "Search User",
-          style: GoogleFonts.akayaTelivigala(
-              textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold)),
+          "Find Friends",
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
               icon: Icon(
                 Icons.logout,
-                color: Colors.white,
+                color: blue,
               ),
               onPressed: () => logOut(context))
         ],
@@ -102,7 +100,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               child: Container(
                 height: size.height / 20,
                 width: size.height / 20,
-                child: CircularProgressIndicator(color: purple),
+                child: CircularProgressIndicator(color: blue),
               ),
             )
           : Column(children: [
@@ -123,31 +121,30 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                     autofocus: false,
                     controller: _search,
                     decoration: InputDecoration(
-                        fillColor: pink,
+                        fillColor: nav,
                         filled: true,
                         border: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.white,
                               width: 2.0,
                             ),
-                            borderRadius: BorderRadius.circular(30.0)),
+                            borderRadius: BorderRadius.circular(10.0)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.white,
                               width: 2.0,
                             ),
-                            borderRadius: BorderRadius.circular(30.0)),
-                        suffixIcon: IconButton(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        prefixIcon: IconButton(
                           onPressed: onSearch,
                           icon: Icon(
                             Icons.search,
                             color: Colors.white,
                           ),
                         ),
-                        //labelText: 'Search',
-                        labelStyle: GoogleFonts.akayaTelivigala(
-                            textStyle:
-                                TextStyle(color: Colors.white, fontSize: 22))),
+                        labelText: 'Search',
+                        labelStyle:
+                            TextStyle(color: Colors.white, fontSize: 16)),
                   ),
                 ),
               ),
@@ -162,7 +159,6 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                       onTap: () {
                         String roomId = chatRoomId(
                             _auth.currentUser!.displayName!, userMap!['name']);
-
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -172,24 +168,25 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                               ),
                             ));
                       },
-                      leading: Icon(Icons.account_box, color: pink),
+                      leading: Icon(Icons.account_box, color: blue),
                       title: Text(
                         userMap!['name'],
                         style: TextStyle(
-                          color: purple,
+                          color: Colors.white,
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       subtitle: Text(
                         userMap!['email'],
-                        style: TextStyle(color: pink),
+                        style: TextStyle(color: grey),
                       ),
-                      trailing: Icon(Icons.chat, color: pink),
+                      trailing: Icon(Icons.chat, color: blue),
                     )
                   : Container(),
             ]),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: blue,
         child: Icon(Icons.group),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(

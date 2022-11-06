@@ -1,3 +1,4 @@
+import 'package:chat_app/constants/colours.dart';
 import 'package:chat_app/screens/HomeScreen.dart';
 import 'package:chat_app/group_chatting/add_members.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -82,6 +83,7 @@ class _GroupInfoState extends State<GroupInfo> {
             context: context,
             builder: (context) {
               return AlertDialog(
+                //backgroundColor: Colors.green,
                 content: ListTile(
                   onTap: () => removeMembers(index),
                   title: Text("Remove This Member"),
@@ -128,6 +130,7 @@ class _GroupInfoState extends State<GroupInfo> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: background,
         body: isLoading
             ? Container(
                 height: size.height,
@@ -141,7 +144,9 @@ class _GroupInfoState extends State<GroupInfo> {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: BackButton(),
+                      child: BackButton(
+                        color: Colors.white,
+                      ),
                     ),
                     Container(
                       height: size.height / 8,
@@ -153,7 +158,7 @@ class _GroupInfoState extends State<GroupInfo> {
                             width: size.height / 11,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.grey,
+                              color: blue,
                             ),
                             child: Icon(
                               Icons.group,
@@ -170,6 +175,7 @@ class _GroupInfoState extends State<GroupInfo> {
                                 widget.groupName,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
+                                  color: Colors.white,
                                   fontSize: size.width / 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -191,6 +197,7 @@ class _GroupInfoState extends State<GroupInfo> {
                       child: Text(
                         "${membersList.length} Members",
                         style: TextStyle(
+                          color: Colors.white,
                           fontSize: size.width / 20,
                           fontWeight: FontWeight.w500,
                         ),
@@ -216,10 +223,12 @@ class _GroupInfoState extends State<GroupInfo> {
                             ),
                             leading: Icon(
                               Icons.add,
+                              color: Colors.green,
                             ),
                             title: Text(
                               "Add Members",
                               style: TextStyle(
+                                color: Colors.green,
                                 fontSize: size.width / 22,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -235,17 +244,26 @@ class _GroupInfoState extends State<GroupInfo> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             onTap: () => showDialogBox(index),
-                            leading: Icon(Icons.account_circle),
+                            leading: Icon(
+                              Icons.account_circle,
+                              color: blue,
+                            ),
                             title: Text(
                               membersList[index]['name'],
                               style: TextStyle(
+                                color: Colors.white,
                                 fontSize: size.width / 22,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            subtitle: Text(membersList[index]['email']),
+                            subtitle: Text(
+                              membersList[index]['email'],
+                              style: TextStyle(color: grey),
+                            ),
                             trailing: Text(
-                                membersList[index]['isAdmin'] ? "Admin" : ""),
+                              membersList[index]['isAdmin'] ? "Admin" : "",
+                              style: TextStyle(color: Colors.green),
+                            ),
                           );
                         },
                       ),
