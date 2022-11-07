@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:chat_app/aes_encryption/aes.dart';
 import 'package:chat_app/constants/colours.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -85,9 +86,11 @@ class ChatRoom extends StatelessWidget {
 
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
+      final enctxt = MyEncryptionDecryption.encryptAES(_message.text);
+
       Map<String, dynamic> messages = {
         "sendby": _auth.currentUser!.displayName,
-        "message": _message.text,
+        "message": enctxt,
         "type": "text",
         "time": FieldValue.serverTimestamp(),
       };
@@ -266,7 +269,8 @@ class ChatRoom extends StatelessWidget {
                     : grey,
               ),
               child: Text(
-                map['message'],
+                MyEncryptionDecryption.decryptAES(map['message']),
+                //map['message'],
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
