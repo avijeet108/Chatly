@@ -10,3 +10,19 @@
 
 ## Download APK
 [Click to download](https://drive.google.com/file/d/1jniEbYedj-xLvFW5RKPwUSQYHulUL23E/view?usp=sharing)
+
+## Sample Screens
+
+### Login & Signup 
+
+### Finding Friends
+
+### One to one chatting
+
+### Group list
+
+### Adding people to create new group
+
+### Group Chatting
+
+### Group info
